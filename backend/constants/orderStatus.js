@@ -1,0 +1,7 @@
+export const ORDER_STATUS = {
+    PENDING: "PENDING",
+    PREPARING: "PREPARING",
+    READY: "READY",
+    SERVED: "SERVED",
+    CANCELLED: "CANCELLED",
+};

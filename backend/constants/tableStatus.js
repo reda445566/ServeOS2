@@ -1,0 +1,7 @@
+export const TABLE_STATUS = {
+    AVAILABLE: "AVAILABLE",
+    OCCUPIED: "OCCUPIED",
+    RESERVED: "RESERVED",
+    CLEANING: "CLEANING",
+};
+
