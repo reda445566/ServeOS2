@@ -4,6 +4,8 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import notFoundMiddleware from "./middlewares/notFound.middleware.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
+import authRoutes from "./modules/auth/auth.routes.js";
+import restaurantRoutes from "./modules/restaurants/restaurant.routes.js";
 
 dotenv.config();
 
@@ -19,7 +21,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-
+app.use("/api/auth", authRoutes);
+app.use("/api/restaurants", restaurantRoutes);
 
 // Error Handling Middlewares
 app.use(notFoundMiddleware);
