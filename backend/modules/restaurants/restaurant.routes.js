@@ -9,3 +9,5 @@ router.post("/", authMiddleware, createRestaurantValidationRules, validate, crea
 router.get("/me", authMiddleware, getRestaurantController);
 
 export default router;
+
+

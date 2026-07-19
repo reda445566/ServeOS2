@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import prisma from "../../config/prisma.js";
+import { ROLES } from "../../constants/roles.js";
 import ApiError from "../../utils/ApiError.js";
 import { generateToken } from "../../utils/jwt.js";
 
@@ -81,6 +82,76 @@ export const registerOwner = async ({ restaurantName, ownerEmail, ownerPassword,
     restaurant: result.restaurant,
     branch: result.branch,
     token,
+  };
+};
+
+export const registerEmployee = async ({ email, password, role, branchId, currentUser }) => {
+  const normalizedEmail = email?.trim().toLowerCase();
+
+  if (![ROLES.OWNER, ROLES.MANAGER].includes(currentUser?.role)) {
+    throw new ApiError(403, "Only owners or managers can register employees");
+  }
+
+  if (!currentUser?.restaurantId) {
+    throw new ApiError(400, "Current user is not attached to a restaurant");
+  }
+
+  const allowedRoles = [ROLES.MANAGER, ROLES.CASHIER, ROLES.WAITER, ROLES.CHEF];
+  if (!allowedRoles.includes(role)) {
+    throw new ApiError(400, "Invalid employee role");
+  }
+
+  const existingUser = await prisma.user.findUnique({
+    where: { email: normalizedEmail },
+  });
+
+  if (existingUser) {
+    throw new ApiError(409, "Email already registered");
+  }
+
+  let targetBranchId = branchId || currentUser.branchId || null;
+
+  if (targetBranchId) {
+    const branch = await prisma.branch.findFirst({
+      where: {
+        id: targetBranchId,
+        restaurantId: currentUser.restaurantId,
+      },
+    });
+
+    if (!branch) {
+      throw new ApiError(400, "Branch does not belong to your restaurant");
+    }
+  }
+
+  const passwordHash = await bcrypt.hash(password, 12);
+
+  const user = await prisma.user.create({
+    data: {
+      email: normalizedEmail,
+      passwordHash,
+      role,
+      restaurantId: currentUser.restaurantId,
+      branchId: targetBranchId,
+      status: "ACTIVE",
+    },
+  });
+
+  await prisma.auditLog.create({
+    data: {
+      userId: currentUser.id,
+      action: "REGISTER_EMPLOYEE",
+      details: `Registered ${role} for restaurant ${currentUser.restaurantId}`,
+    },
+  });
+
+  return {
+    id: user.id,
+    email: user.email,
+    role: user.role,
+    restaurantId: user.restaurantId,
+    branchId: user.branchId,
+    status: user.status,
   };
 };
 

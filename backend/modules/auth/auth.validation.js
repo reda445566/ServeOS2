@@ -1,4 +1,5 @@
 import { body, validationResult } from "express-validator";
+import { ROLES } from "../../constants/roles.js";
 import ApiError from "../../utils/ApiError.js";
 
 const toValidationErrors = (errors) =>
@@ -25,6 +26,28 @@ export const registerOwnerValidationRules = [
   body("branchName").trim().notEmpty().withMessage("Branch name is required"),
 ];
 
+export const registerEmployeeValidationRules = [
+  body("email")
+    .trim()
+    .notEmpty()
+    .withMessage("Email is required")
+    .isEmail()
+    .withMessage("Valid email is required"),
+  body("password")
+    .trim()
+    .notEmpty()
+    .withMessage("Password is required")
+    .isLength({ min: 6 })
+    .withMessage("Password must be at least 6 characters"),
+  body("role")
+    .trim()
+    .notEmpty()
+    .withMessage("Role is required")
+    .isIn([ROLES.MANAGER, ROLES.CASHIER, ROLES.WAITER, ROLES.CHEF])
+    .withMessage("Invalid role"),
+  body("branchId").optional({ nullable: true }).isString().withMessage("Branch ID must be a string"),
+];
+
 export const loginValidationRules = [
   body("email")
     .trim()
@@ -44,5 +67,7 @@ export const validate = (req, res, next) => {
 
   next();
 };
+
+
 
 

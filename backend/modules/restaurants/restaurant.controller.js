@@ -23,3 +23,5 @@ export const getRestaurantController = async (req, res, next) => {
     next(error);
   }
 };
+
+

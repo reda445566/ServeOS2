@@ -6,6 +6,8 @@ import notFoundMiddleware from "./middlewares/notFound.middleware.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import authRoutes from "./modules/auth/auth.routes.js";
 import restaurantRoutes from "./modules/restaurants/restaurant.routes.js";
+import categoryRoutes from "./modules/menu/categories/category.routes.js";
+import itemRoutes from "./modules/menu/items/item.routes.js";
 
 dotenv.config();
 
@@ -23,6 +25,8 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/restaurants", restaurantRoutes);
+app.use("/api/menu/categories", categoryRoutes);
+app.use("/api/menu/items", itemRoutes);
 
 // Error Handling Middlewares
 app.use(notFoundMiddleware);
