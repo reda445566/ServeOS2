@@ -1,0 +1,425 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+@import "tailwindcss";
+
+:root {
+  font-family: 'Inter', sans-serif;
+  background: #F6F5F1;
+  color: #1B1D21;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.serveos-root {
+  --bg: #F6F5F1;
+  --surface: #FFFFFF;
+  --surface-2: #FCFBF8;
+  --border: #E6E3DA;
+  --text: #1B1D21;
+  --text-soft: #6C6F76;
+  --brand-panel: #1B1D21;
+  --brand-panel-2: #24272C;
+  --brand-text: #F2F1EE;
+  --brand-text-soft: #9EA2A8;
+  --accent: #C8791F;
+  --accent-strong: #A8631A;
+  --accent-soft: rgba(200, 121, 31, 0.12);
+  --ready: #2F8F5B;
+  --pending: #C8791F;
+  --preparing: #3D7BC2;
+  --shadow: 0 20px 50px -20px rgba(20, 20, 20, 0.25);
+  --radius: 14px;
+
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  min-height: 100vh;
+  width: 100%;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+.serveos-root[data-theme="dark"] {
+  --bg: #101114;
+  --surface: #17181C;
+  --surface-2: #1B1D21;
+  --border: #2A2C31;
+  --text: #F1F0EC;
+  --text-soft: #8D9096;
+  --brand-panel: #0C0D0F;
+  --brand-panel-2: #16181B;
+  --brand-text: #F1F0EC;
+  --brand-text-soft: #7D8087;
+  --accent: #E0983B;
+  --accent-strong: #F3AE55;
+  --accent-soft: rgba(224, 152, 59, 0.14);
+  --shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.6);
+}
+
+.serveos-root * { box-sizing: border-box; }
+
+.serveos-shell {
+  display: grid;
+  grid-template-columns: 42% 58%;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.serveos-brand {
+  position: relative;
+  background: linear-gradient(165deg, var(--brand-panel) 0%, var(--brand-panel-2) 100%);
+  color: var(--brand-text);
+  padding: 48px 48px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.serveos-brand::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.045) 1px, transparent 0);
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+
+.serveos-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+.serveos-mark {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+}
+
+.serveos-wordmark {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--brand-text);
+}
+
+.serveos-wordmark span {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.serveos-tagline-block {
+  position: relative;
+  z-index: 2;
+  margin-top: 44px;
+}
+
+.serveos-eyebrow {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.serveos-headline {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  max-width: 420px;
+  color: var(--brand-text);
+}
+
+.serveos-subcopy {
+  font-size: 14.5px;
+  color: var(--brand-text-soft);
+  line-height: 1.6;
+  max-width: 380px;
+  margin-top: 16px;
+}
+
+.serveos-rail {
+  position: relative;
+  z-index: 2;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.serveos-ticket {
+  background: rgba(255,255,255,0.035);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  backdrop-filter: blur(6px);
+}
+
+.serveos-ticket:nth-child(1) { transform: translateX(0px) rotate(-0.6deg); }
+.serveos-ticket:nth-child(2) { transform: translateX(14px) rotate(0.4deg); }
+.serveos-ticket:nth-child(3) { transform: translateX(0px) rotate(-0.3deg); }
+
+.serveos-ticket-id {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12.5px;
+  color: var(--brand-text-soft);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.serveos-ticket-id b { color: var(--brand-text); font-weight: 600; }
+
+.serveos-ticket-type {
+  font-size: 11px;
+  color: var(--brand-text-soft);
+  border-left: 1px solid rgba(255,255,255,0.12);
+  padding-left: 8px;
+  margin-left: 2px;
+}
+
+.serveos-pill {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 4px 9px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.serveos-pill::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.serveos-pill.pending { color: var(--pending); background: rgba(200,121,31,0.14); }
+.serveos-pill.preparing { color: var(--preparing); background: rgba(61,123,194,0.14); animation: servePulse 1.8s ease-in-out infinite; }
+.serveos-pill.ready { color: var(--ready); background: rgba(47,143,91,0.14); }
+
+@keyframes servePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
+}
+
+.serveos-brand-footer {
+  position: relative;
+  z-index: 2;
+  font-size: 12px;
+  color: var(--brand-text-soft);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 40px;
+}
+
+.serveos-brand-footer .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--ready);
+}
+
+.serveos-formside {
+  position: relative;
+  background: var(--surface-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 32px;
+}
+
+.serveos-card {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.serveos-theme-toggle {
+  position: absolute;
+  top: 30px;
+  right: 32px;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-soft);
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.serveos-theme-toggle:hover { color: var(--accent); border-color: var(--accent); }
+.serveos-theme-toggle svg { width: 17px; height: 17px; }
+.serveos-theme-toggle .icon-moon { display: none; }
+.serveos-root[data-theme="dark"] .icon-sun { display: none; }
+.serveos-root[data-theme="dark"] .icon-moon { display: block; }
+
+.serveos-form-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.serveos-form-sub {
+  font-size: 13.5px;
+  color: var(--text-soft);
+  margin-bottom: 28px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.serveos-field {
+  margin-bottom: 16px;
+}
+
+.serveos-field label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-soft);
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+
+.serveos-field input {
+  width: 100%;
+  padding: 11px 13px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.serveos-field input::placeholder { color: var(--text-soft); opacity: 0.6; }
+
+.serveos-field input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.serveos-row-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.serveos-row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: -4px 0 20px;
+  font-size: 13px;
+}
+
+.serveos-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-soft);
+  cursor: pointer;
+  user-select: none;
+}
+
+.serveos-check input {
+  width: 15px; height: 15px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.serveos-link {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.serveos-link:hover { color: var(--accent-strong); }
+
+.serveos-btn {
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 9px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+  font-family: 'Inter', sans-serif;
+}
+
+.serveos-btn:hover { background: var(--accent-strong); }
+
+.serveos-btn:active { transform: scale(0.99); }
+
+.serveos-switch-line {
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--text-soft);
+  margin-top: 22px;
+}
+
+.serveos-terms {
+  font-size: 12px;
+  color: var(--text-soft);
+  line-height: 1.6;
+  margin-top: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+.serveos-terms input { margin-top: 3px; accent-color: var(--accent); cursor: pointer; }
+
+@media (max-width: 1040px) {
+  .serveos-shell { grid-template-columns: 1fr; }
+  .serveos-brand { display: none; }
+  .serveos-formside { padding: 28px 20px; }
+}
