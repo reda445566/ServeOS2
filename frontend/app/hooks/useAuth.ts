@@ -1,16 +1,9 @@
 import { useCallback, useState } from "react";
-import { authService } from "../services/auth.service";
+import { authService, type RegisterOwnerPayload } from "../services/auth.service";
 
 interface LoginPayload {
   email: string;
   password: string;
-}
-
-interface RegisterPayload {
-  restaurantName: string;
-  ownerEmail: string;
-  ownerPassword: string;
-  branchName: string;
 }
 
 function parseError(error: unknown) {
@@ -40,7 +33,7 @@ export function useAuth() {
     }
   }, []);
 
-  const register = useCallback(async (payload: RegisterPayload) => {
+  const register = useCallback(async (payload: RegisterOwnerPayload) => {
     setLoading(true);
     setError(null);
 
