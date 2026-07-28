@@ -294,6 +294,46 @@ select {
 .serveos-root[data-theme="dark"] .icon-sun { display: none; }
 .serveos-root[data-theme="dark"] .icon-moon { display: block; }
 
+.serveos-auth-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px;
+  margin: 0 auto 28px;
+  max-width: 320px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.serveos-auth-tabs a {
+  flex: 1;
+  text-align: center;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-soft);
+  text-decoration: none;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.serveos-auth-tabs a:hover {
+  color: var(--text);
+}
+
+.serveos-auth-tabs a.active {
+  background: var(--surface-2);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.serveos-root[data-theme="dark"] .serveos-auth-tabs a.active {
+  background: var(--border);
+  box-shadow: none;
+}
+
 .serveos-form-title {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 24px;

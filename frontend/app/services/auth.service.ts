@@ -1,33 +1,48 @@
-const handleResponse = async (response: Response) => {
-  const json = await response.json().catch(() => null);
+import { apiRequest } from "./api";
 
-  if (!response.ok) {
-    const message = json?.message || response.statusText || "Request failed.";
-    throw new Error(message);
-  }
+export interface RegisterOwnerPayload {
+  restaurantName: string;
+  ownerEmail: string;
+  ownerPassword: string;
+  branchName: string;
+}
 
-  return json;
+type AuthApiData = {
+  user?: {
+    id: string;
+    email: string;
+    role: string;
+    restaurantId?: string | null;
+    branchId?: string | null;
+  };
+  token?: string;
+};
+
+type AuthApiResponse = {
+  success: boolean;
+  message: string;
+  data: AuthApiData;
 };
 
 export const authService = {
   login: async (email: string, password: string) => {
-    const response = await fetch("/api/auth/login", {
+    const result = await apiRequest<AuthApiResponse>("/api/auth/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
       body: JSON.stringify({ email, password }),
     });
-
-    return handleResponse(response);
+    return result.data;
   },
-  register: async (payload: unknown) => {
-    const response = await fetch("/api/auth/register-owner", {
+
+  register: async (payload: RegisterOwnerPayload) => {
+    const result = await apiRequest<AuthApiResponse>("/api/auth/register-owner", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
       body: JSON.stringify(payload),
     });
+    return result.data;
+  },
 
-    return handleResponse(response);
+  getCurrentUser: async () => {
+    const result = await apiRequest<{ success: boolean; data: { user: AuthApiData["user"] } }>("/api/auth/me");
+    return result.data.user;
   },
 };
